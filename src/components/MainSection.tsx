@@ -4,7 +4,7 @@ import TodoList from './TodoList'
 import { RootStateType } from '../reducers'
 import { getCompletedTodoCount } from '../selectors'
 import { connect, ConnectedProps } from 'react-redux'
-import { clearCompleted, completeAllTodos } from '../actions/todosActions'
+import { completeAllTodos } from '../actions/todosActions'
 
 
 const MainSection = ({ todosCount, completedCount, dispatch }: PropsFromRedux) =>

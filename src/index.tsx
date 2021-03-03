@@ -1,13 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
+import 'todomvc-app-css/index.css'
 
 import { createStore, applyMiddleware } from 'redux';
 import { createLogger } from 'redux-logger';
 import rootReducer from './reducers';
 import { Provider } from 'react-redux';
+
 
 const middleware = [];
 if (process.env.NODE_ENV !== 'production') {

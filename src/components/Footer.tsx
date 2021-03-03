@@ -4,13 +4,18 @@ import { SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE } from '../actions/todosActionTyp
 import { useDispatch } from 'react-redux'
 import { clearCompleted } from '../actions/todosActions'
 
-const FILTER_TITLES = {
+const FILTER_TITLES: Record<string, string> = {
   [SHOW_ALL]: 'All',
   [SHOW_ACTIVE]: 'Active',
   [SHOW_COMPLETED]: 'Completed'
 }
 
-const Footer = ({activeCount: number, completedCount: number}) => {
+interface Props {
+  activeCount: number,
+  completedCount: number
+}
+
+const Footer = ({activeCount, completedCount}: Props) => {
   const itemWord = activeCount === 1 ? 'item' : 'items'
   const dispatch = useDispatch()
   return (
