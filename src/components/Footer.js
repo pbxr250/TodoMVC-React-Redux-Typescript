@@ -1,7 +1,8 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import FilterLink from '../containers/FilterLink'
-import { SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE } from '../constants/TodoFilters'
+import Link from './Link'
+import { SHOW_ALL, SHOW_COMPLETED, SHOW_ACTIVE } from '../actions/todosActionTypes'
+import { useDispatch } from 'react-redux'
+import { clearCompleted } from '../actions/todosActions'
 
 const FILTER_TITLES = {
   [SHOW_ALL]: 'All',
@@ -9,9 +10,9 @@ const FILTER_TITLES = {
   [SHOW_COMPLETED]: 'Completed'
 }
 
-const Footer = (props) => {
-  const { activeCount, completedCount, onClearCompleted } = props
+const Footer = ({activeCount: number, completedCount: number}) => {
   const itemWord = activeCount === 1 ? 'item' : 'items'
+  const dispatch = useDispatch()
   return (
     <footer className="footer">
       <span className="todo-count">
@@ -20,9 +21,9 @@ const Footer = (props) => {
       <ul className="filters">
         {Object.keys(FILTER_TITLES).map(filter =>
           <li key={filter}>
-            <FilterLink filter={filter}>
+            <Link filter={filter}>
               {FILTER_TITLES[filter]}
-            </FilterLink>
+            </Link>
           </li>
         )}
       </ul>
@@ -30,18 +31,12 @@ const Footer = (props) => {
         !!completedCount &&
         <button
           className="clear-completed"
-          onClick={onClearCompleted}
+          onClick={() => dispatch(clearCompleted())}
         >Clear completed</button>
         
       }
     </footer>
   )
-}
-
-Footer.propTypes = {
-  completedCount: PropTypes.number.isRequired,
-  activeCount: PropTypes.number.isRequired,
-  onClearCompleted: PropTypes.func.isRequired,
 }
 
 export default Footer

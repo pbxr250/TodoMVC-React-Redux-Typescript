@@ -28,7 +28,6 @@ const MainSection = ({ todosCount, completedCount, dispatch }: PropsFromRedux) =
         <Footer
           completedCount={completedCount}
           activeCount={todosCount - completedCount}
-          onClearCompleted={actions.clearCompleted}
         />
       }
     </section>
