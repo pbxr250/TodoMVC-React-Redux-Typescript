@@ -1,22 +1,24 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import classnames from 'classnames'
+import React, { Component } from 'react';
+import classnames from 'classnames';
 
-export default class TodoTextInput extends Component {
-  static propTypes = {
-    onSave: PropTypes.func.isRequired,
-    text: PropTypes.string,
-    placeholder: PropTypes.string,
-    editing: PropTypes.bool,
-    newTodo: PropTypes.bool
-  }
+
+interface Props {
+  onSave: (text: string) => void,
+  text?: string,
+  placeholder?: string,
+  editing?: boolean,
+  newTodo?: boolean
+}
+
+
+export default class TodoTextInput extends Component<Props, {text: string}> {
 
   state = {
     text: this.props.text || ''
   }
 
-  handleSubmit = e => {
-    const text = e.target.value.trim()
+  handleSubmit = (e: React.KeyboardEvent) => {
+    const text = (e.target as HTMLInputElement).value.trim()
     if (e.which === 13) {
       this.props.onSave(text)
       if (this.props.newTodo) {
@@ -25,13 +27,13 @@ export default class TodoTextInput extends Component {
     }
   }
 
-  handleChange = e => {
-    this.setState({ text: e.target.value })
+  handleChange = (e: React.ChangeEvent) => {
+    this.setState({ text: (e.target as HTMLInputElement).value })
   }
 
-  handleBlur = e => {
+  handleBlur = (e: React.FocusEvent) => {
     if (!this.props.newTodo) {
-      this.props.onSave(e.target.value)
+      this.props.onSave((e.target as HTMLInputElement).value)
     }
   }
 

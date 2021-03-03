@@ -1,13 +1,17 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import TodoTextInput from './TodoTextInput'
+import { addTodo } from '../actions/todosActions'
 
-const Header = ({ addTodo }) => (
+interface Props {
+  addTodo: typeof addTodo
+}
+
+const Header = ({ addTodo }: Props) => (
   <header className="header">
     <h1>todos</h1>
     <TodoTextInput
       newTodo
-      onSave={(text) => {
+      onSave={(text: string) => {
         if (text.length !== 0) {
           addTodo(text)
         }
@@ -17,8 +21,5 @@ const Header = ({ addTodo }) => (
   </header>
 )
 
-Header.propTypes = {
-  addTodo: PropTypes.func.isRequired
-}
 
 export default Header

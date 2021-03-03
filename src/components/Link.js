@@ -1,24 +1,22 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React, { useState } from 'react'
 import classnames from 'classnames'
+import { useSelector, useDispatch } from 'react-redux'
 
-const Link = ({ active, children, setFilter }) =>
-  (
-    // eslint-disable-next-line jsx-a11y/anchor-is-valid
+const Link = ({ filter: string, children }) => {
+  const stateFilter = useSelector(state => state.visibilityFilter)
+  const [active, setActive] = useState(filter === stateFilter)
+  const dispatch = useDispatch()
+
+  return (
     <a
       className={classnames({ selected: active })}
       style={{ cursor: 'pointer' }}
-      onClick={() => setFilter()}
+      onClick={() => dispatch(setFilter())}
     >
       {children}
     </a>
   )
-
-
-Link.propTypes = {
-  active: PropTypes.bool.isRequired,
-  children: PropTypes.node.isRequired,
-  setFilter: PropTypes.func.isRequired
 }
+
 
 export default Link

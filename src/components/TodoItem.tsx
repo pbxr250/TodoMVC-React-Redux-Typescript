@@ -1,15 +1,26 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import TodoTextInput from './TodoTextInput'
+import { deleteTodo, editTodo, completeTodo } from '../actions/todosActions'
 
-export default class TodoItem extends Component {
-  static propTypes = {
-    todo: PropTypes.object.isRequired,
-    editTodo: PropTypes.func.isRequired,
-    deleteTodo: PropTypes.func.isRequired,
-    completeTodo: PropTypes.func.isRequired
-  }
+
+interface Props {
+  todo: todoType,
+  dispatch: any
+}
+
+interface State {
+  editing: boolean; 
+};
+
+interface todoType {
+  text: string,
+  completed: boolean,
+  id: number
+}
+
+
+export default class TodoItem extends Component<Props, State> {
 
   state = {
     editing: false
@@ -19,17 +30,17 @@ export default class TodoItem extends Component {
     this.setState({ editing: true })
   }
 
-  handleSave = (id, text) => {
+  handleSave = (id: number, text: string) => {
     if (text.length === 0) {
-      this.props.deleteTodo(id)
+      this.props.dispatch(deleteTodo(id));
     } else {
-      this.props.editTodo(id, text)
+      this.props.dispatch(editTodo(id, text));
     }
     this.setState({ editing: false })
   }
 
   render() {
-    const { todo, completeTodo, deleteTodo } = this.props
+    const { todo, dispatch } = this.props
 
     let element
     if (this.state.editing) {
@@ -44,12 +55,12 @@ export default class TodoItem extends Component {
           <input className="toggle"
                  type="checkbox"
                  checked={todo.completed}
-                 onChange={() => completeTodo(todo.id)} />
+                 onChange={() => dispatch(completeTodo(todo.id))} />
           <label onDoubleClick={this.handleDoubleClick}>
             {todo.text}
           </label>
           <button className="destroy"
-                  onClick={() => deleteTodo(todo.id)} />
+                  onClick={() => dispatch(deleteTodo(todo.id))} />
         </div>
       )
     }

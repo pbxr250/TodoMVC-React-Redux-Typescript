@@ -8,13 +8,15 @@ import {
     TodoActionType
 } from '../actions/todosActionTypes'
 
-interface todosStateType {
+interface todoType {
     text: string,
     completed: boolean,
     id: number
 }
 
-const initialState: todosStateType[] = [
+type todoStateType = Array<todoType>
+
+const initialState: todoStateType = [
     {
         text: 'Use Redux',
         completed: false,
@@ -22,7 +24,7 @@ const initialState: todosStateType[] = [
     }
 ]
 
-export default function todos(state: todosStateType[] = initialState, action: TodoActionType): todosStateType[] {
+export default function todos(state: todoStateType = initialState, action: TodoActionType): todoStateType {
     switch (action.type) {
         case ADD_TODO:
         return [
